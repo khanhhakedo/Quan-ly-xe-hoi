@@ -93,6 +93,27 @@ public class ProductController {
 
     }
 
+    @GetMapping("/pricemax")
+    public ResponseEntity<?> getProductsPriceMax() {
+        List<Product> products = IProductService.getProductASC();
+
+        Product product = products.get(products.size()-1);
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setPrice(product.getPrice());
+        productDto.setBrand(product.getBrand().getBrandId());
+        productDto.setName(product.getName());
+        productDto.setImage(product.getImage());
+        productDto.setDescription(product.getDescription());
+        productDto.setRating(product.getRating());
+        productDto.setCountInStock(product.getCountInStock());
+        productDto.setNumReviews(product.getNumReviews());
+        productDto.setCategory(product.getCategory());
+
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         Product product = IProductService.getProductById(id);
